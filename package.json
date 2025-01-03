@@ -1,0 +1,18 @@
+{
+  "name": "eventapp-master",
+  "version": "1.0.0",
+  "description": "EventApp este o aplicație modernă, dezvoltată în Android Studio, care îți simplifică procesul de descoperire și achiziție de bilete la evenimentele din Timișoara.  Cu ajutorul acesteia, poți explora evenimentele disponibile în oraș, salva favoritele pentru acces rapid și partaja cu ușurință detaliile cu prietenii tăi.  Totul este conceput pentru a transforma planificarea ieșirilor într-o experiență plăcută și fără efort.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16"
+  }
+}
