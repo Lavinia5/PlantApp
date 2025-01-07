@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services") // Plugin pentru Firebase
 }
 
@@ -17,8 +19,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+        resValue("string", "facebook_app_id", "\"${project.properties["FACEBOOK_APP_ID"]}\"")
 
+        buildConfigField("String", "GOOGLE_REQUEST_TOKEN", "\"${project.properties["GOOGLE_REQUEST_TOKEN"]}\"")
+        buildConfigField("String", "FACEBOOK_CLIENT_TOKEN", "\"${project.properties["FACEBOOK_CLIENT_TOKEN"]}\"")
+        buildConfigField("String", "FACEBOOK_APP_ID", "\"${project.properties["FACEBOOK_APP_ID"]}\"")
+        buildConfigField("String", "API_URL", "\"${project.properties["API_URL"]}\"")
+    }
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -49,21 +59,39 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(libs.androidx.tracing.perfetto.handshake)
 
     // Firebase BOM (recomandat)
-    implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.navigation.compose)
+
+    // Biblioteca pentru Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
 
     // Alte servicii Firebase (opțional)
-    // implementation("com.google.firebase:firebase-firestore-ktx")
-    // implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+
+    // Dagger hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    // Facebook
+    implementation("com.facebook.android:facebook-android-sdk:16.0.0")
+    implementation("androidx.compose.material:material-icons-extended:1.4.3") // Versiunea poate varia
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
