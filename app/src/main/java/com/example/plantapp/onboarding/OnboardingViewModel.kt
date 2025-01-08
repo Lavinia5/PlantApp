@@ -9,12 +9,12 @@ import androidx.lifecycle.viewModelScope
 
 import com.example.plantapp.domain.auht.repository.profile.model.UserProfile
 import com.example.plantapp.domain.auht.repository.profile.usecase.ProfileUseCases
-import com.example.plantapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-
+import com.example.plantapp.utils.Response
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
+class
+OnboardingViewModel @Inject constructor(
     private val profileUseCases: ProfileUseCases,
 ) : ViewModel() {
 

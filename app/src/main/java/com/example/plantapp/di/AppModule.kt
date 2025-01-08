@@ -14,6 +14,8 @@ import com.example.plantapp.profile.ProfileRepositoryImpl
 import com.example.plantapp.domain.auht.repository.usecase.AuthUseCases
 import com.example.plantapp.domain.auht.repository.profile.usecase.ProfileUseCases
 import com.example.plantapp.domain.auht.repository.profile.usecase.UpdateProfile
+import com.example.plantapp.domain.auht.repository.tips.DailyTipsRepository
+import com.example.plantapp.domain.auht.repository.tips.DailyTipsRepositoryImpl
 import com.example.plantapp.domain.auht.repository.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -74,4 +76,9 @@ object AppModule {
             deleteProfile = com.example.plantapp.domain.auht.repository.profile.usecase.DeleteProfile(profileRepository)
         )
     }
+    @Provides
+    fun provideDailyTipsRepository(): DailyTipsRepository {
+        return DailyTipsRepositoryImpl()
+    }
+
 }

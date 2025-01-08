@@ -13,6 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 import com.example.plantapp.onboarding.OnboardingViewModel
+import com.example.plantapp.presentation.DailyTipsScreen
 import com.example.plantapp.presentation.LoginScreen
 import com.example.plantapp.presentation.ProfileScreen
 import com.example.plantapp.presentation.SignUpScreen
@@ -97,6 +98,12 @@ fun AppNavHost(
             composable(ROUTE_GOAL) {
                 GoalScreen(navController = navController)
             }
+            // Ruta Daily Tips
+            composable(ROUTE_DAILY_TIPS) {
+                DailyTipsScreen(navController = navController)
+            }
+
+
         }
     }
 }

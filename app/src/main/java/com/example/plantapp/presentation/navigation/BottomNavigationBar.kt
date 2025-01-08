@@ -31,6 +31,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.plantapp.navigation.ROUTE_DAILY_TIPS
 import com.example.plantapp.navigation.ROUTE_DASHBOARD
 import com.example.plantapp.ui.theme.EventAppTheme
 
@@ -61,6 +62,11 @@ fun BottomNavigationBar(
             selectedIcon = Icons.Filled.Person,
             unselectedIcon = Icons.Outlined.Person,
         ),
+        BottomNavigationItem( // Nouă secțiune pentru Sfaturi
+            title = "Tips",
+            selectedIcon = Icons.Filled.Chat,
+            unselectedIcon = Icons.Outlined.Chat,
+        )
     )
 
     var selectedItemIndex by rememberSaveable {
@@ -83,6 +89,7 @@ fun BottomNavigationBar(
                                 0 -> navController.navigate(ROUTE_DASHBOARD)
                                 1 -> navController.navigate(ROUTE_DASHBOARD)
                                 2 -> navController.navigate("profile")
+                                3 -> navController.navigate(ROUTE_DAILY_TIPS)
                             }
                         },
                         label = {
