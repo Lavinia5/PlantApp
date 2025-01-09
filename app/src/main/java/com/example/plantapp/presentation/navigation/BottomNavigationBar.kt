@@ -4,15 +4,19 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.QuestionMark
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.TipsAndUpdates
+import androidx.compose.material.icons.outlined.Alarm
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.QuestionMark
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.TipsAndUpdates
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -33,10 +37,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.plantapp.navigation.ROUTE_CHAT
 import com.example.plantapp.navigation.ROUTE_DAILY_TIPS
 import com.example.plantapp.navigation.ROUTE_DASHBOARD
 import com.example.plantapp.navigation.ROUTE_PLANT_QUIZ
 import com.example.plantapp.navigation.ROUTE_PROFILE
+import com.example.plantapp.navigation.ROUTE_SEARCH
+import com.example.plantapp.navigation.ROUTE_WATERING_REMINDER
 import com.example.plantapp.ui.theme.EventAppTheme
 
 data class BottomNavigationItem(
@@ -59,9 +66,16 @@ fun BottomNavigationBar(
             title = "Chat",
             selectedIcon = Icons.Filled.Chat,
             unselectedIcon = Icons.Outlined.Chat,
-            route = ROUTE_DASHBOARD // Exemplu de rută
+            route = ROUTE_CHAT// Exemplu de rută
         ),
         BottomNavigationItem(
+            title = "Search",
+            selectedIcon = Icons.Filled.Search, // Utilizează o pictogramă relevantă
+            unselectedIcon = Icons.Outlined.Search,
+            route = ROUTE_SEARCH
+        ),
+
+                BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
@@ -84,9 +98,16 @@ fun BottomNavigationBar(
             selectedIcon = Icons.Filled.TipsAndUpdates,
             unselectedIcon = Icons.Outlined.TipsAndUpdates,
             route = ROUTE_DAILY_TIPS
-        )
+        ),
+                BottomNavigationItem(
+                title = "Watering",
+        selectedIcon = Icons.Filled.Alarm,
+        unselectedIcon = Icons.Outlined.Alarm,
+        route = ROUTE_WATERING_REMINDER
     )
 
+
+    )
     CompositionLocalProvider(LocalTonalElevationEnabled provides false) {
         EventAppTheme(dynamicColor = false) {
             NavigationBar(

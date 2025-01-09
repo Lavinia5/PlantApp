@@ -2,6 +2,7 @@ package com.example.plantapp.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -11,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.plantapp.chatgpt.SearchScreen
+import com.example.plantapp.getalarms.WateringReminderScreen
 
 import com.example.plantapp.onboarding.OnboardingViewModel
 import com.example.plantapp.presentation.DailyTipsScreen
@@ -43,7 +46,7 @@ fun AppNavHost(
     Scaffold(
         bottomBar = {
             // Afișează BottomNavigationBar doar pe anumite ecrane
-            if (currentRoute in listOf(ROUTE_PROFILE, ROUTE_GOAL, ROUTE_DAILY_TIPS, ROUTE_PLANT_QUIZ)) {
+            if (currentRoute in listOf(ROUTE_PROFILE, ROUTE_GOAL, ROUTE_DAILY_TIPS, ROUTE_PLANT_QUIZ, ROUTE_WATERING_REMINDER)) {
                 BottomNavigationBar(navController)
             }
         }
@@ -106,6 +109,19 @@ fun AppNavHost(
             composable(ROUTE_PLANT_QUIZ) {
                 PlantQuizScreen(navController = navController)
             }
+            composable(ROUTE_WATERING_REMINDER) {
+                WateringReminderScreen() // Ecranul pentru setarea memento-ului
+            }
+            composable(ROUTE_CHAT) {
+                // Aici adaugi ecranul de Chat
+                ChatScreen()
+            }
+            // Adaugă ruta pentru căutare
+            composable(ROUTE_SEARCH) {
+                SearchScreen(navController = navController)
+            }
+
+
 
 
         }
@@ -116,4 +132,9 @@ fun AppNavHost(
 @Composable
 fun GoalScreen(navController: NavHostController) {
     // UI-ul specific pentru GoalScreen
+}
+@Composable
+fun ChatScreen() {
+    // Aici implementezi interfața și funcționalitatea pentru ChatGPT
+    Text(text = "Welcome to Chat!")
 }

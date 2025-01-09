@@ -68,6 +68,9 @@ dependencies {
     // Firebase BOM (recomandat)
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.google.code.gson:gson:2.8.8")
+
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation(libs.androidx.espresso.core)
