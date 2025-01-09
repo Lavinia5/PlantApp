@@ -5,13 +5,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
-
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.QuestionMark
+import androidx.compose.material.icons.filled.TipsAndUpdates
 import androidx.compose.material.icons.outlined.Chat
-
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.QuestionMark
+import androidx.compose.material.icons.outlined.TipsAndUpdates
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,9 +22,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTonalElevationEnabled
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -33,45 +35,57 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.plantapp.navigation.ROUTE_DAILY_TIPS
 import com.example.plantapp.navigation.ROUTE_DASHBOARD
+import com.example.plantapp.navigation.ROUTE_PLANT_QUIZ
+import com.example.plantapp.navigation.ROUTE_PROFILE
 import com.example.plantapp.ui.theme.EventAppTheme
-
 
 data class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
+    val route: String // Adăugăm o rută pentru navigare
 )
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BottomNavigationBar(
     navController: NavController
 ) {
+    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+
+    // Lista de elemente pentru bara de navigare
     val items = listOf(
         BottomNavigationItem(
             title = "Chat",
             selectedIcon = Icons.Filled.Chat,
             unselectedIcon = Icons.Outlined.Chat,
+            route = ROUTE_DASHBOARD // Exemplu de rută
         ),
         BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
+            route = ROUTE_DASHBOARD
         ),
         BottomNavigationItem(
             title = "Profile",
             selectedIcon = Icons.Filled.Person,
             unselectedIcon = Icons.Outlined.Person,
+            route = ROUTE_PROFILE
         ),
-        BottomNavigationItem( // Nouă secțiune pentru Sfaturi
-            title = "Tips",
-            selectedIcon = Icons.Filled.Chat,
-            unselectedIcon = Icons.Outlined.Chat,
+        BottomNavigationItem(
+            title = "Quiz",
+            selectedIcon = Icons.Filled.QuestionMark,
+            unselectedIcon = Icons.Outlined.QuestionMark,
+            route = ROUTE_PLANT_QUIZ
+        ),
+        BottomNavigationItem(
+            title = "Daily Tips",
+            selectedIcon = Icons.Filled.TipsAndUpdates,
+            unselectedIcon = Icons.Outlined.TipsAndUpdates,
+            route = ROUTE_DAILY_TIPS
         )
     )
-
-    var selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
 
     CompositionLocalProvider(LocalTonalElevationEnabled provides false) {
         EventAppTheme(dynamicColor = false) {
@@ -85,16 +99,9 @@ fun BottomNavigationBar(
                         selected = selectedItemIndex == index,
                         onClick = {
                             selectedItemIndex = index
-                            when (index) {
-                                0 -> navController.navigate(ROUTE_DASHBOARD)
-                                1 -> navController.navigate(ROUTE_DASHBOARD)
-                                2 -> navController.navigate("profile")
-                                3 -> navController.navigate(ROUTE_DAILY_TIPS)
-                            }
+                            navController.navigate(item.route) // Navigăm către ruta definită
                         },
-                        label = {
-                            Text(text = item.title)
-                        },
+                        label = { Text(text = item.title) },
                         colors = NavigationBarItemDefaults.colors(
                             indicatorColor = Color.Transparent
                         ),
@@ -118,5 +125,3 @@ fun BottomNavigationBar(
         }
     }
 }
-
-

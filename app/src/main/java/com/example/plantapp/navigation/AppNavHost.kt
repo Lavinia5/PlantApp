@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.plantapp.onboarding.OnboardingViewModel
 import com.example.plantapp.presentation.DailyTipsScreen
 import com.example.plantapp.presentation.LoginScreen
+import com.example.plantapp.presentation.PlantQuizScreen
 import com.example.plantapp.presentation.ProfileScreen
 import com.example.plantapp.presentation.SignUpScreen
 import com.example.plantapp.presentation.navigation.BottomNavigationBar
@@ -101,6 +102,9 @@ fun AppNavHost(
             // Ruta Daily Tips
             composable(ROUTE_DAILY_TIPS) {
                 DailyTipsScreen(navController = navController)
+            }
+            composable(ROUTE_PLANT_QUIZ) {
+                PlantQuizScreen(navController = navController)
             }
 
 
