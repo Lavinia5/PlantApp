@@ -43,7 +43,7 @@ fun AppNavHost(
     Scaffold(
         bottomBar = {
             // Afișează BottomNavigationBar doar pe anumite ecrane
-            if (currentRoute == ROUTE_PROFILE || currentRoute == ROUTE_GOAL) {
+            if (currentRoute in listOf(ROUTE_PROFILE, ROUTE_GOAL, ROUTE_DAILY_TIPS, ROUTE_PLANT_QUIZ)) {
                 BottomNavigationBar(navController)
             }
         }
