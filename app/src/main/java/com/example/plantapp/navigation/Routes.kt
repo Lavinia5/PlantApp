@@ -10,3 +10,5 @@ const val ROUTE_PLANT_QUIZ = "plant_quiz"
 const val ROUTE_WATERING_REMINDER = "watering_reminder"
 const val ROUTE_CHAT = "chat"
 const val ROUTE_SEARCH = "search"
+const val ROUTE_PLANT_DETAILS = "details/{plantName}"
+

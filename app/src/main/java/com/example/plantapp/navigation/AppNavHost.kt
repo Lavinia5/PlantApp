@@ -1,5 +1,6 @@
 package com.example.plantapp.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -8,11 +9,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.plantapp.chatgpt.SearchScreen
+import com.example.plantapp.dateplants.PlantDetailScreen
+import com.example.plantapp.dateplants.PlantSearchScreen
 import com.example.plantapp.getalarms.WateringReminderScreen
 
 import com.example.plantapp.onboarding.OnboardingViewModel
@@ -33,72 +38,46 @@ const val ROUTE_GOAL = "goal" // Ruta nouă
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_SPLASH
+    startDestination: String = ROUTE_SPLASH // Poți schimba aici ruta dorită
 ) {
-    // Obține ViewModel-ul pentru onboarding
-    val onboardingViewModel: OnboardingViewModel = hiltViewModel()
-
-    // Monitorizează ruta curentă
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = currentBackStackEntry?.destination?.route
-
-    // Scaffold pentru layout-ul principal
     Scaffold(
         bottomBar = {
-            // Afișează BottomNavigationBar doar pe anumite ecrane
+            val currentRoute = navController.currentBackStackEntryAsState()?.value?.destination?.route
             if (currentRoute in listOf(ROUTE_PROFILE, ROUTE_GOAL, ROUTE_DAILY_TIPS, ROUTE_PLANT_QUIZ, ROUTE_WATERING_REMINDER)) {
                 BottomNavigationBar(navController)
             }
         }
     ) { innerPadding ->
-        // Host pentru navigare
         NavHost(
-            modifier = modifier.padding(innerPadding),
             navController = navController,
-            startDestination = startDestination
+            startDestination = startDestination,
+            modifier = modifier.padding(innerPadding)
         ) {
             // Ruta Splash
             composable(ROUTE_SPLASH) {
-                SplashScreen(
-                    navController = navController
-                )
+                SplashScreen(navController = navController)
             }
-
             // Ruta Login
             composable(ROUTE_LOGIN) {
                 LoginScreen(
                     navController = navController,
-                    onSignInClick = {
-                        // Navigare exemplu
-                        navController.navigate(ROUTE_PROFILE)
-                    },
-                    onForgotPasswordClick = {
-                        // Navigare exemplu
-                        navController.navigate(ROUTE_SIGNUP)
-                    }
+                    onSignInClick = { navController.navigate(ROUTE_PROFILE) },
+                    onForgotPasswordClick = { navController.navigate(ROUTE_SIGNUP) }
                 )
             }
-
             // Ruta Signup
             composable(ROUTE_SIGNUP) {
                 SignUpScreen(
-                    onboardingViewModel = onboardingViewModel,
+                    onboardingViewModel = hiltViewModel(),
                     navController = navController,
-                    onSignUpClick = {
-                        // Navigare exemplu
-                        navController.navigate(ROUTE_GOAL)
-                    }
+                    onSignUpClick = { navController.navigate(ROUTE_GOAL) }
                 )
             }
-
             // Ruta Profil
             composable(ROUTE_PROFILE) {
-                ProfileScreen(
-                    navController = navController
-                )
+                ProfileScreen(navController = navController)
             }
-
-            // Ruta Goal (nouă)
+            // Ruta Goal
             composable(ROUTE_GOAL) {
                 GoalScreen(navController = navController)
             }
@@ -106,27 +85,34 @@ fun AppNavHost(
             composable(ROUTE_DAILY_TIPS) {
                 DailyTipsScreen(navController = navController)
             }
+            // Ruta Quiz
             composable(ROUTE_PLANT_QUIZ) {
                 PlantQuizScreen(navController = navController)
             }
+            // Ruta Watering Reminder
             composable(ROUTE_WATERING_REMINDER) {
-                WateringReminderScreen() // Ecranul pentru setarea memento-ului
+                WateringReminderScreen()
             }
+            // Ruta Chat
             composable(ROUTE_CHAT) {
-                // Aici adaugi ecranul de Chat
                 ChatScreen()
             }
-            // Adaugă ruta pentru căutare
+            // Ruta Căutare
             composable(ROUTE_SEARCH) {
-                SearchScreen(navController = navController)
+                PlantSearchScreen(navController = navController)
             }
-
-
-
-
+            // Ruta Detalii Plantă
+            composable(
+                route = ROUTE_PLANT_DETAILS,
+                arguments = listOf(navArgument("plantName") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val plantName = backStackEntry.arguments?.getString("plantName") ?: ""
+                PlantDetailScreen(plantName = plantName)
+            }
         }
     }
 }
+
 
 // Definiție GoalScreen
 @Composable
